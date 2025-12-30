@@ -2,50 +2,66 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>AI Çalışma Süresi Hesaplama</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Çalışma Süresi</title>
 
 <style>
+* {
+    box-sizing: border-box;
+}
+
 body {
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
     color: #fff;
+}
+
+/* FULL PAGE */
+.app {
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    padding: 20px;
 }
 
+/* CARD */
 .container {
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 20px;
-    padding: 30px;
-    width: 380px;
-    box-shadow: 0 0 40px rgba(0, 255, 255, 0.4);
-    text-align: center;
+    width: 100%;
+    max-width: 420px;
+    background: rgba(0, 0, 0, 0.65);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 0 35px rgba(0, 255, 255, 0.4);
+    display: flex;
+    flex-direction: column;
 }
 
+/* TITLE */
 .ai-title {
+    text-align: center;
     font-size: 22px;
     margin-bottom: 10px;
     animation: glow 2s infinite alternate;
 }
 
 @keyframes glow {
-    from { text-shadow: 0 0 5px cyan; }
-    to { text-shadow: 0 0 20px cyan; }
+    from { text-shadow: 0 0 6px cyan; }
+    to { text-shadow: 0 0 18px cyan; }
 }
 
+/* MARQUEE */
 .marquee {
     overflow: hidden;
     white-space: nowrap;
-    box-sizing: border-box;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 .marquee span {
     display: inline-block;
     padding-left: 100%;
-    animation: scroll 12s linear infinite;
+    animation: scroll 10s linear infinite;
     font-size: 14px;
     opacity: 0.85;
 }
@@ -55,82 +71,100 @@ body {
     100% { transform: translateX(-100%); }
 }
 
+/* FORM */
 label {
-    display: block;
-    margin-top: 12px;
     font-size: 14px;
+    margin-top: 14px;
 }
 
 input {
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border-radius: 8px;
+    padding: 14px;
+    margin-top: 6px;
+    border-radius: 12px;
     border: none;
-    font-size: 14px;
+    font-size: 16px;
 }
 
+/* BUTTON */
 button {
-    margin-top: 18px;
-    padding: 10px;
+    margin-top: 22px;
+    padding: 16px;
     width: 100%;
     border: none;
-    border-radius: 10px;
+    border-radius: 16px;
     background: linear-gradient(90deg, #00c6ff, #0072ff);
     color: #fff;
-    font-size: 15px;
+    font-size: 17px;
+    font-weight: bold;
     cursor: pointer;
     transition: transform 0.2s;
 }
 
-button:hover {
-    transform: scale(1.05);
+button:active {
+    transform: scale(0.97);
 }
 
+/* RESULT */
 .result {
-    margin-top: 20px;
-    font-size: 26px;
+    margin-top: 24px;
+    font-size: 30px;
+    text-align: center;
     font-weight: bold;
-    animation: pulse 1.5s infinite;
+    animation: pulse 1.4s infinite;
 }
 
 @keyframes pulse {
     0% { transform: scale(1); }
-    50% { transform: scale(1.08); }
+    50% { transform: scale(1.1); }
     100% { transform: scale(1); }
 }
 
+/* FOOTER */
 footer {
-    margin-top: 25px;
+    margin-top: auto;
+    padding-top: 20px;
     font-size: 12px;
+    text-align: center;
     opacity: 0.6;
+}
+
+/* DESKTOP IMPROVEMENT */
+@media (min-width: 768px) {
+    .container {
+        padding: 32px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-    <div class="ai-title">🤖 Yapay Zeka Destekli Çalışma Süresi</div>
+<div class="app">
+    <div class="container">
 
-    <div class="marquee">
-        <span>✨ AI hesaplıyor • ⚡ Anlık analiz • 🤖 Akıllı süre hesaplama sistemi ✨</span>
+        <div class="ai-title">🤖 AI Destekli Çalışma Süresi</div>
+
+        <div class="marquee">
+            <span>✨ Yapay zeka hesaplıyor • ⚡ Mobil uyumlu • 🤖 Akıllı süre analizi ✨</span>
+        </div>
+
+        <label>Başlangıç Saati</label>
+        <input type="time" id="startTime" value="12:00">
+
+        <label>Bitiş Saati</label>
+        <input type="time" id="endTime" value="13:00">
+
+        <label>Mola Süresi (dakika)</label>
+        <input type="number" id="breakMinutes" value="10">
+
+        <button onclick="calculate()">🚀 Hesapla</button>
+
+        <div class="result" id="result"></div>
+
+        <footer>© Copyright - Bilal Tektaş</footer>
+
     </div>
-
-    <label>Başlangıç Saati</label>
-    <input type="time" id="startTime" value="12:00">
-
-    <label>Bitiş Saati</label>
-    <input type="time" id="endTime" value="13:00">
-
-    <label>Mola Süresi (dakika)</label>
-    <input type="number" id="breakMinutes" value="10">
-
-    <button onclick="calculate()">🚀 Hesapla</button>
-
-    <div class="result" id="result"></div>
-
-    <footer>© Copyright - Bilal Tektaş</footer>
 </div>
 
 <script>
@@ -147,13 +181,8 @@ function calculate() {
 
     const workMinutes = totalEnd - totalStart - breakMin;
 
-    if (workMinutes < 0) {
-        document.getElementById("result").innerText = "⛔ Hatalı giriş";
-        return;
-    }
-
     document.getElementById("result").innerText =
-        `🧠 ${workMinutes} dakika`;
+        workMinutes >= 0 ? `🧠 ${workMinutes} dakika` : "⛔ Hatalı giriş";
 }
 </script>
 
