@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>AI Çalışma Süresi Hesaplama</title>
+
+<style>
+body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    padding: 30px;
+    width: 380px;
+    box-shadow: 0 0 40px rgba(0, 255, 255, 0.4);
+    text-align: center;
+}
+
+.ai-title {
+    font-size: 22px;
+    margin-bottom: 10px;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 5px cyan; }
+    to { text-shadow: 0 0 20px cyan; }
+}
+
+.marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll 12s linear infinite;
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+label {
+    display: block;
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+}
+
+button {
+    margin-top: 18px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 26px;
+    font-weight: bold;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+footer {
+    margin-top: 25px;
+    font-size: 12px;
+    opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="ai-title">🤖 Yapay Zeka Destekli Çalışma Süresi</div>
+
+    <div class="marquee">
+        <span>✨ AI hesaplıyor • ⚡ Anlık analiz • 🤖 Akıllı süre hesaplama sistemi ✨</span>
+    </div>
+
+    <label>Başlangıç Saati</label>
+    <input type="time" id="startTime" value="12:00">
+
+    <label>Bitiş Saati</label>
+    <input type="time" id="endTime" value="13:00">
+
+    <label>Mola Süresi (dakika)</label>
+    <input type="number" id="breakMinutes" value="10">
+
+    <button onclick="calculate()">🚀 Hesapla</button>
+
+    <div class="result" id="result"></div>
+
+    <footer>© Copyright - Bilal Tektaş</footer>
+</div>
+
+<script>
+function calculate() {
+    const start = document.getElementById("startTime").value;
+    const end = document.getElementById("endTime").value;
+    const breakMin = parseInt(document.getElementById("breakMinutes").value) || 0;
+
+    const [sh, sm] = start.split(":").map(Number);
+    const [eh, em] = end.split(":").map(Number);
+
+    const totalStart = sh * 60 + sm;
+    const totalEnd = eh * 60 + em;
+
+    const workMinutes = totalEnd - totalStart - breakMin;
+
+    if (workMinutes < 0) {
+        document.getElementById("result").innerText = "⛔ Hatalı giriş";
+        return;
+    }
+
+    document.getElementById("result").innerText =
+        `🧠 ${workMinutes} dakika`;
+}
+</script>
+
+</body>
+</html>
